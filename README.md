@@ -36,4 +36,4 @@ Spring Boot Default Settings
 >     - com.group.proj.***service.module***
 >     - com.group.proj.***dao.module***
 >     - com.group.proj.***web.module***
-> - <U>[두가지 패키지구조의 설명 및 추천 패키지 구조 설명](http://www.javapractices.com/topic/TopicAction.do?Id=205){: target="_blank"}</U>
+> - <a href="http://www.javapractices.com/topic/TopicAction.do?Id=205" target="_blank"><U>두가지 패키지구조의 설명 및 추천 패키지 구조 설명</U></a>
