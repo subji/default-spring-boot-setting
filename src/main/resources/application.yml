@@ -34,8 +34,8 @@ spring:
       prefix: /WEB-INF/views/
   # DATABASE
   datasource:
-    username: biz2017
-    password: biz2017
+    username: {username}
+    password: {password}
     # ORACLE
     url: jdbc:oracle:thin:@{host}:1521:{SID}
     driver-class-name: oracle.jdbc.driver.OracleDriver
