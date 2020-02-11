@@ -36,8 +36,12 @@ spring:
   datasource:
     username: biz2017
     password: biz2017
-    url: jdbc:oracle:thin:@10.1.51.31:1521:ASPDB1
+    # ORACLE
+    url: jdbc:oracle:thin:@{host}:1521:{SID}
     driver-class-name: oracle.jdbc.driver.OracleDriver
+    # MariaDB
+    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
+    url: jdbc:log4jdbc:mariadb://{host}:3306/{Database Name}?characterEncoding=UTF-8  
     hikari:
       minimum-idle: 10 # 최소 Pool 개수
       auto-commit: true # AutoCommit 여부
