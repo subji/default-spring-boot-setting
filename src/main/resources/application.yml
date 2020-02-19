@@ -34,14 +34,11 @@ spring:
       prefix: /WEB-INF/views/
   # DATABASE
   datasource:
-    username: {username}
-    password: {password}
+    username: biz2017
+    password: biz2017
     # ORACLE
-    url: jdbc:oracle:thin:@{host}:1521:{SID}
+    url: jdbc:oracle:thin:@10.1.51.31:1521:BIZ2017
     driver-class-name: oracle.jdbc.driver.OracleDriver
-    # MariaDB
-    driver-class-name: net.sf.log4jdbc.sql.jdbcapi.DriverSpy
-    url: jdbc:log4jdbc:mariadb://{host}:3306/{Database Name}?characterEncoding=UTF-8  
     hikari:
       minimum-idle: 10 # 최소 Pool 개수
       auto-commit: true # AutoCommit 여부
@@ -81,18 +78,14 @@ spring:
   #           password: ${spring.security.user.password}
 
 # ACQUATOR
-# management:
-#   endpoint:
-#     shutdown:
-#       enabled: true
-#     health:
-#       show-details: always
-#     info:
-#       enabled: true
-#   endpoints:
-#     web:
-#       exposure:
-#         include: "*"
+management:
+  endpoint.shutdown.enabled: true
+  endpoint.health.show-details: always
+  endpoint.info.enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
 
 # LOG
 logging:
@@ -105,6 +98,7 @@ logging:
     name: log/social-metrics-monitoring-service.log
   level:
     com: DEBUG
+    root: DEBUG
     jdbc.sqltiming: DEBUG
     org.hibernate.sql: DEBUG
     jdbc.resultsettable: DEBUG
