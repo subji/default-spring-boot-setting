@@ -25,7 +25,7 @@ spring:
   profiles:
     active: DEV
   application:
-    name: Demo Project
+    name: Demo Project # 프로젝트 이름 설정
   # WebMVCController 에서 WebMvcConfigurer 를 상속받아 메소드를 오버라이드하기 때문에 아래 설정을 작성할 필요가 없다.
   # 하지만 스프링 부트에서 에러에 대한 기본적인 매핑인 /error 를 처리하기 위해서는 아래의 view resolver 코드를 작성해야 한다.
   mvc:
@@ -34,10 +34,10 @@ spring:
       prefix: /WEB-INF/views/
   # DATABASE
   datasource:
-    username: biz2017
-    password: biz2017
+    username: "username"
+    password: "password"
     # ORACLE
-    url: jdbc:oracle:thin:@10.1.51.31:1521:BIZ2017
+    url: jdbc:oracle:thin:@"host":1521:"SID"
     driver-class-name: oracle.jdbc.driver.OracleDriver
     hikari:
       minimum-idle: 10 # 최소 Pool 개수
@@ -93,12 +93,14 @@ logging:
     file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
     console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
   file: 
-    max-size: 100MB
+    max-size: 1024MB
     max-history: 30
     name: log/social-metrics-monitoring-service.log
   level:
     com: DEBUG
-    root: DEBUG
+    root: ERROR
+    jdbc.audit: OFF
+    jdbc.sqlonly: OFF
     jdbc.sqltiming: DEBUG
     org.hibernate.sql: DEBUG
     jdbc.resultsettable: DEBUG
