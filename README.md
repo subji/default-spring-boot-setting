@@ -21,6 +21,7 @@ Spring Boot Default Settings
 > ## **View**
 > - JSP 사용
 > - 필요시 Thymeleaf 또는 별도의 프론트 프레임워크 개발
+> - SPA 프레임워크 전환 필요
 ---
 > ## **Package Structure**
 > - com / Group Id / Project Name
