@@ -61,7 +61,7 @@ public class CallAPI {
         uriComponent = builder.build();
       }
 
-      ResponseEntity<String> result = template.getRestTemplate().exchange(uriComponent.toUriString(), HttpMethod.GET, entity, String.class);
+      ResponseEntity<String> result = template.getRestTemplate().exchange(uriComponent.toUri(), HttpMethod.GET, entity, String.class);
 
       logger.debug("END API(GET) CALLING >>>>> ");
 
@@ -110,8 +110,9 @@ public class CallAPI {
       } else {
         uriComponent = builder.build();
       }
-
-      ResponseEntity<String> result = template.getRestTemplate().exchange(uriComponent.toUriString(), HttpMethod.POST, entity, String.class);
+      // 한글 및 특수문자 파라미터를 전송하기위해서는 UriString 또는 toString 처럼 다시 인코딩을 해주는 방식을 사용하면 안된다.
+      // Uri 객체로 만들어서 보내는 방법을 사용하면 한글 및 특수문자도 정확하게 전달할 수 있다.
+      ResponseEntity<String> result = template.getRestTemplate().exchange(uriComponent.toUri(), HttpMethod.POST, entity, String.class);
 
       logger.debug("END API(GET) CALLING >>>>> ");
 
