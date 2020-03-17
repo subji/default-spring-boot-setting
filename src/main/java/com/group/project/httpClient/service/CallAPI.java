@@ -26,19 +26,20 @@ public class CallAPI {
   private final ObjectMapper objectMapper;
   private final RestTemplateConfiguration template;
 
-  public CallAPI (RestTemplateConfiguration template, ObjectMapper objectMapper)  {
-    this.template = template;
+  public CallAPI (ObjectMapper objectMapper, RestTemplateConfiguration template)  {
     this.objectMapper = objectMapper;
-  }  
-  
+    this.template = template;
+  }
+
   /**
    * API 호출 메소드 (GET)
    * 
    * @param url
    * @param parameter
    * @return
+   * @throws Exception
    */
-  public JsonNode callGet(String url, JSONObject parameter) {
+  public JsonNode get(String url, JSONObject parameter) throws RestClientException, IOException, Exception {
     try {
       HttpHeaders headers = template.getHeaders();
       HttpEntity<String> entity = new HttpEntity<String>(headers);
@@ -47,18 +48,25 @@ public class CallAPI {
       
       UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url);
       UriComponents uriComponent = null;
-      
+
       if (parameter != null)  {
+
         for (Object key : parameter.keySet()) {
           String name = String.valueOf(key.toString());
-          String values = String.valueOf(parameter.get(name).toString());
+          Object values = parameter.get(name);
 
-          builder.queryParam(name, values);
+          if (values instanceof List)  {
+            for (Object value : (List<?>) values) {
+              builder.queryParam(name, value);
+            }
+          } else {
+            builder.queryParam(name, values);
+          }
         }
-
-        uriComponent = builder.build();
+        
+        uriComponent = builder.encode().build();
       } else {
-        uriComponent = builder.build();
+        uriComponent = builder.encode().build();
       }
 
       ResponseEntity<String> result = template.getRestTemplate().exchange(uriComponent.toUri(), HttpMethod.GET, entity, String.class);
@@ -66,29 +74,26 @@ public class CallAPI {
       logger.debug("END API(GET) CALLING >>>>> ");
 
       if (result.getBody() == null) {
-        return null;
+        throw new NullPointerException("CallAPI.get NullPointer");
       }
 
       return objectMapper.readTree(result.getBody());
     } catch (RestClientException e) {
-      e.printStackTrace();
-      return null;
+      throw new RestClientException("CallAPI.get " + e.toString());
     } catch (IOException e) {
-      e.printStackTrace();
-      return null;
-    } catch (Exception e) {
-      e.printStackTrace();
-      return null;
-    }
+      throw new IOException("CallAPI.get " + e.toString());
+    } 
   }
+  
   /**
    * API 호출 메소드 (POST)
    * 
    * @param url
    * @param parameters
    * @return
+   * @throws Exception
    */
-  public JsonNode callPost(String url, JSONObject parameter) {
+  public JsonNode post(String url, JSONObject parameter) throws RestClientException, IOException {
     try {
       HttpHeaders headers = template.getHeaders();
       HttpEntity<String> entity = new HttpEntity<String>(headers);
@@ -101,14 +106,20 @@ public class CallAPI {
       if (parameter != null) {
         for (Object key : parameter.keySet()) {
           String name = String.valueOf(key.toString());
-          String values = String.valueOf(parameter.get(name).toString());
+          Object values = parameter.get(name);
 
-          builder.queryParam(name, values);
+          if (values instanceof List) {
+            for (Object value : (List<?>) values) {
+              builder.queryParam(name, value);
+            }
+          } else {
+            builder.queryParam(name, values);
+          }
         }
 
-        uriComponent = builder.build();
+        uriComponent = builder.encode().build();
       } else {
-        uriComponent = builder.build();
+        uriComponent = builder.encode().build();
       }
       // 한글 및 특수문자 파라미터를 전송하기위해서는 UriString 또는 toString 처럼 다시 인코딩을 해주는 방식을 사용하면 안된다.
       // Uri 객체로 만들어서 보내는 방법을 사용하면 한글 및 특수문자도 정확하게 전달할 수 있다.
@@ -117,20 +128,15 @@ public class CallAPI {
       logger.debug("END API(GET) CALLING >>>>> ");
 
       if (result.getBody() == null) {
-        return null;
+        throw new NullPointerException("CallAPI.post NullPointer");
       }
 
       return objectMapper.readTree(result.getBody());
     } catch (RestClientException e) {
-      e.printStackTrace();
-      return null;
+      throw new RestClientException("CallAPI.post " + e.toString());
     } catch (IOException e) {
-      e.printStackTrace();
-      return null;
-    } catch (Exception e) {
-      e.printStackTrace();
-      return null;
-    }
+      throw new IOException("CallAPI.post " + e.toString());
+    } 
     // try {
     //   String param = "";
 
