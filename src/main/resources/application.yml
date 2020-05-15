@@ -20,6 +20,10 @@ server:
       prefix: access_log
       file-date-format: yyyy-MM-dd
 
+# Application Version
+app:
+  version: 0.0.1
+
 # SPRING
 spring:
   profiles:
@@ -32,13 +36,23 @@ spring:
     view:
       suffix: .jsp
       prefix: /WEB-INF/views/
+  # bean 자동설정
+  main: 
+    allow-bean-definition-overriding: true
   # DATABASE
   datasource:
-    username: "username"
-    password: "password"
     # ORACLE
-    url: jdbc:oracle:thin:@"host":1521:"SID"
-    driver-class-name: oracle.jdbc.driver.OracleDriver
+    username: BEAUTY_DEV
+    password: BEAUTY_DEV2019
+    # oracle.jdbc.driver.OracleDriver 대신에 oracle.jdbc.OracleDriver를 사용
+    # 오라클 9 이후에 oracle.jdbc.driver.OracleDriver는 중단되었음
+    driver-class-name: oracle.jdbc.OracleDriver
+    url: jdbc:oracle:thin:@10.1.51.33:1521:ASPDB3
+    # MySQL & MariaDB
+    # username: "kb"
+    # password: "kb@2020"
+    # url: jdbc:mysql://10.1.51.26:3306/kb_leakage?&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
+    # driver-class-name: com.mysql.jdbc.Driver
     hikari:
       minimum-idle: 10 # 최소 Pool 개수
       auto-commit: true # AutoCommit 여부
@@ -58,11 +72,12 @@ spring:
       hibernate.enable_lazy_load_no_trans: true
       hibernate.format_sql: true
     show-sql: true
+
   # SPRING SECURITY 
-  security:
-    user: 
-      name: social_metrics_monitoring
-      password: social_metrics_monitoring
+  # security:
+  #   user: 
+  #     name: social_metrics_monitoring
+  #     password: social_metrics_monitoring
   # SPRING BOOT ADMIN
   # boot:
   #   admin:
@@ -76,6 +91,12 @@ spring:
   #           user:
   #           name: ${spring.security.user.name}
   #           password: ${spring.security.user.password}
+
+# MABATIS    
+mybatis:
+  mapper-locations: classpath:/mapper/**/*.xml
+  # configuration:
+  #   map-underscore-to-camel-case: true
 
 # ACQUATOR
 management:
@@ -97,16 +118,15 @@ logging:
     max-history: 30
     name: log/social-metrics-monitoring-service.log
   level:
-    com: DEBUG
-    root: ERROR
     jdbc.audit: OFF
     jdbc.sqlonly: OFF
     jdbc.sqltiming: DEBUG
-    org.hibernate.sql: DEBUG
     jdbc.resultsettable: DEBUG
-    org.springframework: DEBUG
     com.zaxxer.hikari.pool: DEBUG
-    com.zaxxer.hikari.HikariDataSource: ERROR
+
+# Test URL
+test: 
+  url: http://qt.some.co.kr/TrendMap/JSON/ServiceHandler
 
 # DEV - PROFILE
 ---

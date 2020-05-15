@@ -2,15 +2,15 @@ package com.group.project.common.dto;
 
 public class CommonResponseDTO {
 
-  private int status;
+  private String status;
   private String message;
   private Object data;
 
-  public int getStatus() {
+  public String getStatus() {
     return status;
   }
 
-  public void setStatus(int status) {
+  public void setStatus(String status) {
     this.status = status;
   }
 

@@ -1,10 +1,14 @@
-package com.daumsoft.monitoring.config;
+package com.group.project.common.config;
+
+import com.group.project.common.interceptor.DemoInterceptor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -41,6 +45,18 @@ public class WebMVCConfiguration implements WebMvcConfigurer {
     bean.setPrefix("/WEB-INF/views/");
     bean.setViewClass(JstlView.class);
     registry.viewResolver(bean);
+  }
+  
+  @Bean
+  DemoInterceptor demoInterceptor () {
+    return new DemoInterceptor();
+  }
+
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(demoInterceptor())
+    .addPathPatterns("/**")
+    .excludePathPatterns("/**");
   }
 
 }
