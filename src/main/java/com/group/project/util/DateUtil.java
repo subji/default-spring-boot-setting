@@ -364,7 +364,7 @@ public class DateUtil {
      */
     public static ArrayList<String> getDayTermList(String inputStartDate, String inputEndDate) {
 
-	    ArrayList<String> dayList = new ArrayList();
+	    ArrayList<String> dayList = new ArrayList<String>();
 
         final String DATE_PATTERN = "yyyy-MM-dd";
         SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);

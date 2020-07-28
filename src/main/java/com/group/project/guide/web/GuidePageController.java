@@ -15,6 +15,8 @@ public class GuidePageController {
 
   @GetMapping(value = { "/guide" })
   public String guidePage (HttpSession session, ModelMap modelMap)  {
+    logger.debug("Guide Page Controller");
+
     return "guide/guide";
   }
   

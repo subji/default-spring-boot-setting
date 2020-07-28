@@ -1,5 +1,6 @@
 # COMMON
 server:
+  shutdown: graceful
   servlet:
     context-path: /
     session:
@@ -9,7 +10,8 @@ server:
       enabled: true
       charset: UTF-8
   tomcat:
-    max-threads: 2000
+    threads:
+      max: 2000
     max-swallow-size: 20MB
     connection-timeout: 180s
     max-http-form-post-size: 20MB
@@ -20,14 +22,16 @@ server:
       prefix: access_log
       file-date-format: yyyy-MM-dd
 
-# Application Version
-app:
-  version: 0.0.1
-
 # SPRING
 spring:
   profiles:
     active: DEV
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: true
+          paths: /**
   application:
     name: Demo Project # 프로젝트 이름 설정
   # WebMVCController 에서 WebMvcConfigurer 를 상속받아 메소드를 오버라이드하기 때문에 아래 설정을 작성할 필요가 없다.
@@ -42,17 +46,18 @@ spring:
   # DATABASE
   datasource:
     # ORACLE
-    username: BEAUTY_DEV
-    password: BEAUTY_DEV2019
+    # username: BEAUTY_DEV
+    # password: BEAUTY_DEV2019
     # oracle.jdbc.driver.OracleDriver 대신에 oracle.jdbc.OracleDriver를 사용
     # 오라클 9 이후에 oracle.jdbc.driver.OracleDriver는 중단되었음
-    driver-class-name: oracle.jdbc.OracleDriver
-    url: jdbc:oracle:thin:@10.1.51.33:1521:ASPDB3
+    # driver-class-name: oracle.jdbc.OracleDriver
+    # url: jdbc:oracle:thin:@10.1.51.33:1521:ASPDB3
     # MySQL & MariaDB
-    # username: "kb"
-    # password: "kb@2020"
-    # url: jdbc:mysql://10.1.51.26:3306/kb_leakage?&serverTimezone=UTC&zeroDateTimeBehavior=convertToNull&useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&useSSL=false
-    # driver-class-name: com.mysql.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # url: jdbc:log4jdbc:mariadb://10.1.51.26:3306/sometrend?characterEncoding=UTF-8&allowMultiQueries=true&useUnicode=true
+    url: jdbc:mysql:loadbalance://10.1.51.35:3306,10.1.51.34:3306,10.1.51.36:3306/sometrend_dev?characterEncoding=UTF-8&serverTimezone=UTC&allowMultiQueries=true&useUnicode=true
+    username: sometrend_dev
+    password: daumsoft0531!
     hikari:
       minimum-idle: 10 # 최소 Pool 개수
       auto-commit: true # AutoCommit 여부
@@ -125,8 +130,7 @@ logging:
     com.zaxxer.hikari.pool: DEBUG
 
 # Test URL
-test: 
-  url: http://qt.some.co.kr/TrendMap/JSON/ServiceHandler
+TM2.URL: http://qt.some.co.kr/TrendMap/JSON/ServiceHandler
 
 # DEV - PROFILE
 ---

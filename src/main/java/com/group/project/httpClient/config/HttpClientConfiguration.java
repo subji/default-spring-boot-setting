@@ -14,8 +14,6 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.message.BasicHeaderElementIterator;
 import org.apache.http.protocol.HTTP;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.TaskScheduler;
@@ -31,8 +29,6 @@ import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 @Configuration
 @EnableScheduling
 public class HttpClientConfiguration {
-
-  private static final Logger logger = LoggerFactory.getLogger(HttpClientConfiguration.class);
 
   // CONNECT TIMEOUT: 연결되기까지의 최대 시간
   // REQUEST TIMEOUT: 커넥션풀에서 커넥션을 가져오기까지의 최대 시간

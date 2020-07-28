@@ -7,8 +7,6 @@ import com.group.project.httpClient.handler.CustomHttpClientRequestErrorHandler;
 import com.group.project.httpClient.interceptor.CustomHttpClientRequestInterceptor;
 
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -24,8 +22,6 @@ import org.springframework.web.client.RestTemplate;
  */
 @Configuration
 public class RestTemplateConfiguration {
-
-  private static final Logger logger = LoggerFactory.getLogger(RestTemplateConfiguration.class);
 
   final CloseableHttpClient httpClient;
 

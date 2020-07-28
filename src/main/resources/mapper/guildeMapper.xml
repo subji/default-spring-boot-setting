@@ -3,23 +3,21 @@
 
 <mapper namespace="guideMapper">
 
-  <resultMap id="guideResultMap" type="com.group.project.guide.dto.GuideMapperDTO">
-    <result property="phone" column="PHONE" />
-    <result property="userId" column="USER_ID" />
-    <result property="userName" column="USER_NM" />
+  <resultMap id="guideResultMap" type="com.group.project.guide.dto.GuideDTO">
+    <result property="withdrawalCodeSeq" column="withdrawal_code_seq" />
+    <result property="reason" column="reason" />
   </resultMap>
 
 	<select 
     id="selectGuideUserInfo"
-    parameterType="com.group.project.guide.dto.GuideMapperDTO"
+    parameterType="com.group.project.guide.dto.GuideDTO"
     resultMap="guideResultMap">
 
-    SELECT USER_ID,
-           USER_NM,
-           PHONE
-      FROM T_USER_INFO
+    SELECT withdrawal_code_seq, 
+           reason
+      FROM t_withdrawal_code
      WHERE 1=1
-       AND USER_NM = #{ userName, jdbcType=VARCHAR }
+       AND withdrawal_code_seq = #{ withdrawalCodeSeq, jdbcType=BIGINT }
 
   </select>
 
